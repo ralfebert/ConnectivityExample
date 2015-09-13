@@ -8,10 +8,17 @@
 
 import UIKit
 import WatchConnectivity
+import AudioToolbox
 
 class ConnectivityHandler : NSObject, WCSessionDelegate {
     
     var session = WCSession.defaultSession()
+    
+    var messages = [String]() {
+        // fire KVO-updates for Swift property
+        willSet { willChangeValueForKey("messages") }
+        didSet  { didChangeValueForKey("messages")  }
+    }
 
     override init() {
         super.init()
@@ -29,6 +36,23 @@ class ConnectivityHandler : NSObject, WCSessionDelegate {
         if message["request"] as? String == "date" {
             replyHandler(["date" : String(NSDate())])
         }
+    }
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
+        let msg = message["msg"]!
+        self.messages.append("Message \(msg)")
+    }
+    
+    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+        let msg = applicationContext["msg"]!
+        self.messages.append("AppContext \(msg)")
+    }
+    
+    func session(session: WCSession, didReceiveUserInfo userInfo: [String : AnyObject]) {
+        let msg = userInfo["msg"]!
+        self.messages.append("UserInfo \(msg)")
     }
 
 }

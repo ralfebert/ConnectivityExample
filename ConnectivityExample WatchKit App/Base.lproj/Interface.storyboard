@@ -29,9 +29,25 @@
                                 <action selector="requestInfo" destination="AgC-eL-Hgc" id="mLm-66-Fgc"/>
                             </connections>
                         </button>
+                        <button width="1" alignment="left" title="Send Message" id="vUN-yZ-gDk">
+                            <connections>
+                                <action selector="sendMessage" destination="AgC-eL-Hgc" id="Qvw-wy-vc4"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="App Context" id="wrv-EK-Njn">
+                            <connections>
+                                <action selector="updateAppContext:" destination="AgC-eL-Hgc" id="2jy-GI-8er"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="User Info" id="ycD-Zy-ng3">
+                            <connections>
+                                <action selector="transferUserInfo:" destination="AgC-eL-Hgc" id="tEg-mx-UnN"/>
+                            </connections>
+                        </button>
                     </items>
                     <connections>
                         <outlet property="messagesTable" destination="R3f-Rh-t9c" id="r3w-9U-xog"/>
+                        <outlet property="sendMessage" destination="vUN-yZ-gDk" id="t55-sc-nG5"/>
                     </connections>
                 </controller>
             </objects>
