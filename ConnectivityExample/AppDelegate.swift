@@ -7,14 +7,46 @@
 //
 
 import UIKit
+import WatchConnectivity
+
+class ConnectivityHandler : NSObject, WCSessionDelegate {
+    
+    var session = WCSession.defaultSession()
+
+    override init() {
+        super.init()
+        
+        session.delegate = self
+        session.activateSession()
+        
+        NSLog("%@", "WCSession.isSupported: \(WCSession.isSupported()), Paired Watch: \(session.paired), Watch App Installed: \(session.watchAppInstalled)")
+    }
+    
+    // MARK: - WCSessionDelegate
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        NSLog("didReceiveMessage: %@", message)
+        if message["request"] as? String == "date" {
+            replyHandler(["date" : String(NSDate())])
+        }
+    }
+
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var connectivityHandler : ConnectivityHandler?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        if WCSession.isSupported() {
+            self.connectivityHandler = ConnectivityHandler()
+        } else {
+            NSLog("WCSession not supported (f.e. on iPad, iOS 8).")
+        }
+
         // Override point for customization after application launch.
         return true
     }
@@ -40,7 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

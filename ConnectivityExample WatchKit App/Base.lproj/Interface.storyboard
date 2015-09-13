@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6221" systemVersion="13E28" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6213"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8092"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="ConnectivityExample_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <table alignment="left" id="R3f-Rh-t9c">
+                            <items>
+                                <tableRow identifier="MessageRow" id="L37-y8-7Tp" customClass="MessageRow" customModule="ConnectivityExample_WatchKit_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" id="M2K-1t-YBD">
+                                        <items>
+                                            <label alignment="left" text="Label" numberOfLines="0" id="xqY-Ov-Bfe"/>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="label" destination="xqY-Ov-Bfe" id="G8A-d8-A50"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                        <button width="1" alignment="left" title="Request Info" id="1W5-e1-oQY">
+                            <connections>
+                                <action selector="requestInfo" destination="AgC-eL-Hgc" id="mLm-66-Fgc"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="messagesTable" destination="R3f-Rh-t9c" id="r3w-9U-xog"/>
+                    </connections>
+                </controller>
             </objects>
         </scene>
     </scenes>
