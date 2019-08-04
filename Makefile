@@ -1,0 +1,2 @@
+format:
+	swiftformat --header "Beispielprojekt ConnectivityExample\nhttps://www.ralfebert.de/ios/watchos-watchkit-connectivity-tutorial/\nLicense: https://choosealicense.com/licenses/cc0-1.0/" --swiftversion 5 --indentcase true --stripunusedargs unnamed-only --self insert --disable blankLinesAtStartOfScope,blankLinesAtEndOfScope .

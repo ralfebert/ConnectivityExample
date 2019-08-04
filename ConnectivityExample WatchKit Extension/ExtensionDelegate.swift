@@ -1,10 +1,6 @@
-//
-//  ExtensionDelegate.swift
-//  ConnectivityExample WatchKit Extension
-//
-//  Created by Ralf Ebert on 13/09/15.
-//  Copyright © 2015 Example. All rights reserved.
-//
+// Beispielprojekt ConnectivityExample
+// https://www.ralfebert.de/ios/watchos-watchkit-connectivity-tutorial/
+// License: https://choosealicense.com/licenses/cc0-1.0/
 
 import WatchKit
 

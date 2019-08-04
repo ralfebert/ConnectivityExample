@@ -1,99 +1,106 @@
-//
-//  InterfaceController.swift
-//  ConnectivityExample WatchKit Extension
-//
-//  Created by Ralf Ebert on 13/09/15.
-//  Copyright © 2015 Example. All rights reserved.
-//
+// Beispielprojekt ConnectivityExample
+// https://www.ralfebert.de/ios/watchos-watchkit-connectivity-tutorial/
+// License: https://choosealicense.com/licenses/cc0-1.0/
 
-import WatchKit
 import Foundation
 import WatchConnectivity
+import WatchKit
 
-class MessageRow : NSObject {
-    
+class MessageRow: NSObject {
+
     @IBOutlet var label: WKInterfaceLabel!
-    
+
 }
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
 
-    var session : WCSession?
+    @IBOutlet var messagesTable: WKInterfaceTable!
+
+    var session: WCSession?
     var counter = 0
 
-    // MARK: - IB
-    
     @IBAction func requestInfo() {
-        session?.sendMessage(["request" : "date"], replyHandler: { (response) in
-            
-            self.messages.append("Reply: \(response)")
-            
-            }, errorHandler: { (error) -> Void in
-                NSLog("Error sending message: %@", error)
+        self.session?.sendMessage(["request": "date"],
+                                  replyHandler: { response in
+                                      self.messages.append("Reply: \(response)")
+                                  },
+                                  errorHandler: { error in
+                                      print("Error sending message: %@", error)
         })
     }
-    
+
     @IBAction func sendMessage() {
-        session?.sendMessage(["msg" : "Message \(++counter)"], replyHandler: nil) { (error) in
-            NSLog("Error sending message: %@", error)
+        self.counter += 1
+        self.session?.sendMessage(["msg": "Message \(counter)"], replyHandler: nil) { error in
+            debugPrint("Error sending message: \(error)")
         }
     }
 
-    @IBAction func updateAppContext(sender: AnyObject) {
-        try! session?.updateApplicationContext(["msg" : "Message \(++counter)"])
+    @IBAction func updateAppContext() {
+        self.counter += 1
+        try! self.session?.updateApplicationContext(["msg": "Message \(counter)"])
     }
-    
-    @IBAction func transferUserInfo(sender: AnyObject) {
-        session?.transferUserInfo(["msg" : "Message \(++counter)"])
+
+    @IBAction func transferUserInfo() {
+        self.counter += 1
+        self.session?.transferUserInfo(["msg": "Message \(counter)"])
     }
-    
-    // MARK: - Controller lifecycle
-    
+
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
+
+        self.messages.append("ready")
+    }
+
     override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        
-        session = WCSession.defaultSession()
-        session?.delegate = self
-        session?.activateSession()
+
+        self.session = WCSession.default
+        self.session?.delegate = self
+        self.session?.activate()
     }
-    
+
+    override func didDeactivate() {
+        super.didDeactivate()
+    }
+
     // MARK: - Messages Table
-    
-    @IBOutlet var messagesTable: WKInterfaceTable!
 
     var messages = [String]() {
         didSet {
-            NSOperationQueue.mainQueue().addOperationWithBlock {
+            OperationQueue.main.addOperation {
                 self.updateMessagesTable()
             }
         }
     }
-    
+
     func updateMessagesTable() {
-        let msgCount = messages.count
-        messagesTable.setNumberOfRows(msgCount, withRowType: "MessageRow")
-        for(var i = 0; i < msgCount; i++) {
-            let row = messagesTable.rowControllerAtIndex(i) as! MessageRow
-            row.label.setText(messages[i])
+        let messages = self.messages
+        self.messagesTable.setNumberOfRows(messages.count, withRowType: "MessageRow")
+        for (i, msg) in messages.enumerated() {
+            let row = self.messagesTable.rowController(at: i) as! MessageRow
+            row.label.setText(msg)
         }
     }
-    
+
     // MARK: - WCSessionDelegate
-    
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
-        WKInterfaceDevice.currentDevice().playHaptic(WKHapticType.Notification)
-        
+
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        debugPrint("activationDidCompleteWith activationState:\(activationState) error:\(String(describing: error))")
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         let msg = message["msg"]!
         self.messages.append("Message \(msg)")
+        WKInterfaceDevice.current().play(.notification)
     }
-    
-    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         let msg = applicationContext["msg"]!
         self.messages.append("AppContext \(msg)")
     }
-    
-    func session(session: WCSession, didReceiveUserInfo userInfo: [String : AnyObject]) {
+
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
         let msg = userInfo["msg"]!
         self.messages.append("UserInfo \(msg)")
     }

@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8092"/>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -10,44 +14,43 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="ConnectivityExample_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <table alignment="left" id="R3f-Rh-t9c">
+                        <table alignment="left" id="IrA-Bl-fWs">
                             <items>
-                                <tableRow identifier="MessageRow" id="L37-y8-7Tp" customClass="MessageRow" customModule="ConnectivityExample_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="0.0" alignment="left" id="M2K-1t-YBD">
+                                <tableRow identifier="MessageRow" id="gEi-QX-xFn" customClass="MessageRow" customModule="ConnectivityExample_WatchKit_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" id="BYr-ht-Lti">
                                         <items>
-                                            <label alignment="left" text="Label" numberOfLines="0" id="xqY-Ov-Bfe"/>
+                                            <label alignment="left" text="Label" numberOfLines="0" id="pEl-io-Ygr"/>
                                         </items>
                                     </group>
                                     <connections>
-                                        <outlet property="label" destination="xqY-Ov-Bfe" id="G8A-d8-A50"/>
+                                        <outlet property="label" destination="pEl-io-Ygr" id="osv-PV-zgy"/>
                                     </connections>
                                 </tableRow>
                             </items>
                         </table>
-                        <button width="1" alignment="left" title="Request Info" id="1W5-e1-oQY">
+                        <button width="1" alignment="left" title="Request Info" id="oFO-A2-bxf">
                             <connections>
-                                <action selector="requestInfo" destination="AgC-eL-Hgc" id="mLm-66-Fgc"/>
+                                <action selector="requestInfo" destination="AgC-eL-Hgc" id="F1C-DP-1I6"/>
                             </connections>
                         </button>
-                        <button width="1" alignment="left" title="Send Message" id="vUN-yZ-gDk">
+                        <button width="1" alignment="left" title="Send Message" id="MCj-kB-uDb">
                             <connections>
-                                <action selector="sendMessage" destination="AgC-eL-Hgc" id="Qvw-wy-vc4"/>
+                                <action selector="sendMessage" destination="AgC-eL-Hgc" id="rNB-wD-xZb"/>
                             </connections>
                         </button>
-                        <button width="1" alignment="left" title="App Context" id="wrv-EK-Njn">
+                        <button width="1" alignment="left" title="Update App Context" id="bzT-wQ-8EU">
                             <connections>
-                                <action selector="updateAppContext:" destination="AgC-eL-Hgc" id="2jy-GI-8er"/>
+                                <action selector="updateAppContext" destination="AgC-eL-Hgc" id="kCw-S6-ANP"/>
                             </connections>
                         </button>
-                        <button width="1" alignment="left" title="User Info" id="ycD-Zy-ng3">
+                        <button width="1" alignment="left" title="Transfer User Info" id="Lpd-Iy-Q49">
                             <connections>
-                                <action selector="transferUserInfo:" destination="AgC-eL-Hgc" id="tEg-mx-UnN"/>
+                                <action selector="transferUserInfo" destination="AgC-eL-Hgc" id="xJv-RM-AZE"/>
                             </connections>
                         </button>
                     </items>
                     <connections>
-                        <outlet property="messagesTable" destination="R3f-Rh-t9c" id="r3w-9U-xog"/>
-                        <outlet property="sendMessage" destination="vUN-yZ-gDk" id="t55-sc-nG5"/>
+                        <outlet property="messagesTable" destination="IrA-Bl-fWs" id="8Rl-ik-goO"/>
                     </connections>
                 </controller>
             </objects>
